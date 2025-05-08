@@ -1,0 +1,25 @@
+.level-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.level-header h2 {
+  margin: 0;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: #4caf50;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: rgba(76, 175, 80, 0.1);
+}
