@@ -8,6 +8,8 @@ import { PrimeReactProvider } from "primereact/api";
 import "primereact/resources/themes/viva-dark/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeflex/primeflex.css";
+import "primeicons/primeicons.css";
+import "./custom.css";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);

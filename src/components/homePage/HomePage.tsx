@@ -1,21 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
-
-type Level = {
-  id: number;
-  title: string;
-  description: string;
-  difficulty: "easy" | "medium" | "hard";
-  completed: boolean;
-  locked: boolean;
-};
 
 const HomePage = () => {
   const [showLevels, setShowLevels] = useState(false);
   const navigate = useNavigate();
-
-  const levels: Level[] = [
+  const [levels, setLevels] = useState([
     {
       id: 1,
       title: "Первые шаги",
@@ -30,7 +20,7 @@ const HomePage = () => {
       description: "Изучаем гравитацию и коллизии",
       difficulty: "easy",
       completed: false,
-      locked: false,
+      locked: true,
     },
     {
       id: 3,
@@ -38,7 +28,7 @@ const HomePage = () => {
       description: "Простые алгоритмические задачи",
       difficulty: "medium",
       completed: false,
-      locked: false,
+      locked: true,
     },
     {
       id: 4,
@@ -48,23 +38,44 @@ const HomePage = () => {
       completed: false,
       locked: true,
     },
-    {
-      id: 5,
-      title: "Условия",
-      description: "Принятие решений в коде",
-      difficulty: "medium",
-      completed: false,
-      locked: true,
-    },
-    {
-      id: 6,
-      title: "Финальный уровень",
-      description: "Комплексная задача",
-      difficulty: "hard",
-      completed: false,
-      locked: true,
-    },
-  ];
+    // {
+    //   id: 5,
+    //   title: "Финальный уровень",
+    //   description: "Комплексная задача",
+    //   difficulty: "hard",
+    //   completed: false,
+    //   locked: true,
+    // },
+  ]);
+
+  useEffect(() => {
+    getComletedLevels();
+  }, []);
+
+  const getComletedLevels = async () => {
+    const username = sessionStorage.getItem("login");
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/completed-levels?username=${username}`
+      );
+      const data = await response.json();
+      console.log(data);
+      const completedLevels = data.completedLevels;
+      setLevels((levels) => {
+        return levels.map((item) => {
+          if (item.id <= completedLevels + 1) {
+            if (item.id <= completedLevels) {
+              item.completed = true;
+            }
+            item.locked = false;
+          }
+          return item;
+        });
+      });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const handleStartClick = () => setShowLevels(true);
   const handleBackClick = () => setShowLevels(false);

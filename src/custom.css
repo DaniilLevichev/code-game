@@ -1,0 +1,8 @@
+.p-toast .p-toast-message.p-toast-message-success {
+  width: 15%;
+  margin-left: 20px;
+}
+.p-toast .p-toast-message.p-toast-message-error {
+  width: 15%;
+  margin-left: 20px;
+}
